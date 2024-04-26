@@ -1,0 +1,41 @@
+{
+  "grid": [
+    { "id": "p1", "xs": 6, "class": "main", "table": "devhard" },
+    {
+      "id": "pnode",
+      "xs": 6,
+      "class": "main",
+      "table": "devhard_with_parent_node",
+      "hide": "data.pnode.foldertype != 'node'"
+    },
+
+    { "id": "p2", "xs": 6, "class": "main", "table": "devhard" },
+
+    { "id": "p9", "xs": 6, "class": "main", "table": "onechannelrtTable", "hide": "!data.p1.r" }
+  ],
+  "spacing": 4,
+
+  "pnode": [
+    { "prop": "foldertype", "title": "foldertype", "type": "text", "hide": "1==1" },
+    { "prop": "parentname", "title": "$parentname", "type": "text" },
+    { "prop": "sn", "title": "Порядковый номер", "type": "text" },
+    { "prop": "longadr", "title": "Серийный номер счетчика", "type": "text" }
+  ],
+
+  "p1": [
+    { "prop": "note", "title": "$Name", "type": "text" },
+    { "prop": "chan", "title": "$Channel", "type": "text" },
+    { "prop": "r", "title": "$Read", "type": "cb" }
+  ],
+
+  "p2": [
+    { "prop": "devpropname", "title": "$devpropname", "type": "input" },
+    { "prop": "polltimefctr", "title": "$polltimefctr", "type": "number", "default": 1 },
+    { "prop": "factor_inout", "title": "Делитель при чтении", "type": "number", "default": 1 }
+  ],
+
+  "p9": [
+    { "prop": "realtime_chan_str", "title": "$realtime_chan_str", "type": "text" },
+    { "prop": "realtime_dev_str", "title": "$realtime_dev_str", "type": "text" }
+  ]
+}

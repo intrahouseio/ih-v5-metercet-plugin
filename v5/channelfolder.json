@@ -1,0 +1,25 @@
+{
+  "grid": [
+    { "id": "p1", "xs": 6, "class": "main", "table": "devhard" },
+    { "id": "p2", "xs": 6, "class": "main", "table": "devhard", "hide": "data.p1.foldertype != 'node'" },
+    { "id": "p3", "xs": 12, "class": "main", "table": "devhard", "height": 240, "hide": "data.p1.foldertype" }
+  ],
+  "spacing": 4,
+
+  "p1": [
+    { "prop": "chan", "title": "$Name", "type": "input" },
+    { "prop": "foldertype", "title": "", "type": "text", "hide": "1==1" }
+  ],
+
+  "p2": [
+    { "prop": "meterid", "title": "Порядковый номер (для нумерации каналов)", "type": "input", "default":"1" },
+    { "prop": "longadr", "title": "Серийный номер счетчика", "type": "input", "default":"123456"},
+    { "prop": "constant", "title": "Постоянная счетчика", "type": "number", "default": 1250 },
+    { "prop": "ks", "title": "Коэф-т Кс для мгновенной мощности", "type": "number", "default":1, "min": 1, "max": 2 },
+    { "prop": "handkti", "title": "Коэффициент тока", "type": "number", "default":1 },
+    { "prop": "handktu", "title": "Коэффициент напряжения", "type": "number", "default":1 },
+    { "prop": "password", "title": "Пароль к счетчику (если не задан - используется дефолтный)", "type": "input" }
+  ],
+
+  "p3": [{ "prop": "txt", "title": "$Comment", "type": "textarea" }]
+}
