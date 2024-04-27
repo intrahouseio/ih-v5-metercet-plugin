@@ -36,27 +36,7 @@
   "default_channel_node_folder": {
     "foldertype": "node",
     "chan": "Новый счетчик",
-    "unitid":1
-  },
-
-  "default_channel": {
-      "chan": "ch1",
-      "r":1,
-      "desc": "AO",
-      "vartype": "int16",
-      "wvartype": "int16",
-      "address": "0x0000",
-      "manbo16": "be",
-      "offset": 0,
-      "unitid": 1,
-      "pollp": true,
-      "fcr": "3",
-      "fcw": "6",
-      "gr": true,
-      "usek": false,
-      "ks0": 0,
-      "ks": 100,
-      "kh0": 0,
-      "kh": 100
+    "unitid":1,
+    "meterid":1
   }
 }

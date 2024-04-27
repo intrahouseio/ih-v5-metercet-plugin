@@ -23,7 +23,12 @@ module.exports = async function(plugin) {
 
   try {
     meterlist = await meterlistformer(plugin);
+  } catch (err) {
+    plugin.log('Для работы плагина требуется версия системы не ниже 5.17.23');
+    plugin.exit(17);
+  }
 
+  try {
     agent = new Agent(plugin, plugin.params);
     agent.run(meterlist);
 

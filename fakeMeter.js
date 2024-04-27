@@ -61,7 +61,6 @@ function serverStart(port) {
     /** Передать ответ **/
     function sendResponse(buf) {
       if (buf) {
-        // buf[0] = meterAdr;
         // Посчитать CRC
         protocol.setCRC(buf);
         c.write(buf);
@@ -91,14 +90,14 @@ function getResponse(abuf) {
   switch (buf[0]) {
     // Проверка связи с нулевым адресом
     case 0x00:
-      resbuf = Buffer.from([0, 0x0, 0, 0]);
+      resbuf = Buffer.from([ 0x0, 0, 0]);
       break;
 
     // Запрос соединения с паролем
     case 0x01:
       console.log('PASSWORD')
       // Пароль не проверяется!!
-      resbuf = Buffer.from([0, 0x0, 0, 0]);
+      resbuf = Buffer.from([ 0x0, 0, 0]);
       break;
 
     // Чтение массивов учтенной энергии
@@ -116,7 +115,7 @@ function getResponse(abuf) {
     // Ответ - Недопустимая команда
     default:
       console.log('Недопустимая команда')
-      resbuf = Buffer.from([0, 0x01, 0, 0]);
+      resbuf = Buffer.from([ 0x01, 0, 0]);
       break;
   }
   return Buffer.concat([longAddress, resbuf]);
@@ -125,7 +124,7 @@ function getResponse(abuf) {
 // Код команды=05, номер массива - байт №2, номер тарифа - байт №3
 // Возвращает A+ A- R+ R-
 function response05(buf) {
-  // let tarif = buf[2];
+
   let tarif = buf[1];
   console.log('Tarif=' + tarif);
   //
@@ -134,25 +133,24 @@ function response05(buf) {
 
 // Код команды=08, код параметра - байт №2
 function response08(buf) {
-  // switch (buf[2]) {
   switch (buf[1]) {
     // Чтение серийного номера 1-4 байты и даты выпуска 5-7 байты
     case 0x00:
-      return Buffer.from([0, 0x2f, 0xfe, 0x19, 0x57, 0x17, 0x05, 0x18, 0, 0]);
+      return Buffer.from([0x2f, 0xfe, 0x19, 0x57, 0x17, 0x05, 0x18, 0, 0]);
 
     // Запрос температуры = 35 = 23h
     case 0x01:
-      return Buffer.from([0, 0x00, 0x23, 0, 0]);
-    // return Buffer.from([0, 0x01, 0, 0]); // Неверная команда - для отладки
+      return Buffer.from([0x00, 0x23, 0, 0]);
+    // return Buffer.from([ 0x01, 0, 0]); // Неверная команда - для отладки
 
     // Чтение коэф-тов трансформации
     case 0x02:
-      return Buffer.from([0, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0, 0]);
+      return Buffer.from([ 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0, 0]);
 
     // Чтение сетевого адреса
     case 0x05:
       meterAdr = 0x53;
-      return Buffer.from([0, 0x00, meterAdr, 0, 0]);
+      return Buffer.from([ 0x00, meterAdr, 0, 0]);
 
     // Чтение расширенных значений для 4ТМ02 - 3 байта
     case 0x11:
@@ -160,7 +158,7 @@ function response08(buf) {
 
     // Чтение варианта исполнения счетчика
     case 0x12:
-      return Buffer.from([0, 0x64, 0x42, 0, 0]);
+      return Buffer.from([ 0x64, 0x42, 0, 0]);
 
     // Чтение расширенных значений с плавающей точкой
     case 0x1b:
@@ -180,53 +178,53 @@ function response0811(buf) {
     case 0x02: // по фазе 2
     case 0x03: // по фазе 3
       // read3Byte - выполняется маскирование 2 старших битов: 0x44=>0x04!!!
-      return Buffer.from([0, 0x44, 0x2f, 0x47, 0, 0]); // = 274241/1000 = 274.241 Watt
+      return Buffer.from([ 0x44, 0x2f, 0x47, 0, 0]); // = 274241/1000 = 274.241 Watt
     // Реактивная мощность
     case 0x04:
     case 0x05:
     case 0x06:
     case 0x07:
-      return Buffer.from([0, 0x44, 0x2f, 0x47, 0, 0]); // 274.241 Watt
+      return Buffer.from([ 0x44, 0x2f, 0x47, 0, 0]); // 274.241 Watt
 
     // Полная мощность
     case 0x08:
     case 0x09:
     case 0x0a:
     case 0x0b:
-      return Buffer.from([0, 0x44, 0x2f, 0x47, 0, 0]); // 274.241 Watt
+      return Buffer.from([ 0x44, 0x2f, 0x47, 0, 0]); // 274.241 Watt
 
     // Напряжение
     case 0x11:
       // fc 304aacb4 005d0a 7e0c
-      return Buffer.from([0, 0x00, 0x5d, 0x0a, 0, 0]); // 23818 = 238,18 V
+      return Buffer.from([ 0x00, 0x5d, 0x0a, 0, 0]); // 23818 = 238,18 V
 
     case 0x12:
     case 0x13:
-      return Buffer.from([0, 0x00, 0x55, 0xf0, 0, 0]); // 22000 = 220 V
+      return Buffer.from([ 0x00, 0x55, 0xf0, 0, 0]); // 22000 = 220 V
 
     // Ток
     case 0x21:
     case 0x22:
     case 0x23:
-      return Buffer.from([0, 0x00, 0x00, 0x58, 0, 0]); // 88/10 = 8.8 мА= 0.0088 А
+      return Buffer.from([ 0x00, 0x00, 0x58, 0, 0]); // 88/10 = 8.8 мА= 0.0088 А
 
     // cos
     case 0x30:
     case 0x31:
     case 0x32:
     case 0x33:
-      return Buffer.from([0, 0x00, 0x00, 0x16, 0, 0]); // 22/100 = 0.22
+      return Buffer.from([ 0x00, 0x00, 0x16, 0, 0]); // 22/100 = 0.22
 
     // Частота
     case 0x40:
-      return Buffer.from([0, 0x80, 0x13, 0x88, 0, 0]); // 5000 = 50 гц (ст бит уст - его сбросить!!)
+      return Buffer.from([ 0x80, 0x13, 0x88, 0, 0]); // 5000 = 50 гц (ст бит уст - его сбросить!!)
 
     // Kuf
     case 0x80:
     case 0x81:
     case 0x82:
     case 0x83:
-      return Buffer.from([0, 0x40, 0x00, 0x21, 0, 0]); // 33/100 = 0.33 (ст бит уст - его сбросить!!)
+      return Buffer.from([ 0x40, 0x00, 0x21, 0, 0]); // 33/100 = 0.33 (ст бит уст - его сбросить!!)
 
     default:
   }
@@ -242,7 +240,7 @@ function response081b02(buf) {
     // Активная мощность по всем фазам
     case 0x00:
       return Buffer.from([
-        0,
+       
         0x57,
         0x49,
         0x3f,
@@ -266,7 +264,7 @@ function response081b02(buf) {
     // Реактивная мощность по всем фазам
     case 0x04:
       return Buffer.from([
-        0,
+       
         0xd7,
         0x3a,
         0xc4,
@@ -290,7 +288,7 @@ function response081b02(buf) {
     // Полная мощность по всем фазам
     case 0x08:
       return Buffer.from([
-        0,
+       
         0xfe,
         0x5d,
         0x04,
@@ -314,7 +312,7 @@ function response081b02(buf) {
     // Фазное напряжение
     case 0x10:
       return Buffer.from([
-        0,
+       
         0x07,
         0x87,
         0x5b,
@@ -338,7 +336,7 @@ function response081b02(buf) {
     // Ток
     case 0x20:
       return Buffer.from([
-        0,
+       
         0x08,
         0x74,
         0xa7,
@@ -362,7 +360,7 @@ function response081b02(buf) {
     // Коэф-т активной мощности  cos phi
     case 0x30:
       return Buffer.from([
-        0,
+      
         0x27,
         0x8b,
         0x24,
@@ -386,7 +384,7 @@ function response081b02(buf) {
     // Коэф-т искажения фазного напряжения %
     case 0x80:
       return Buffer.from([
-        0,
+       
         0x11,
         0x13,
         0x94,
@@ -410,7 +408,7 @@ function response081b02(buf) {
     // Частота сети
     case 0x40:
       return Buffer.from([
-        0,
+      
         0x53,
         0x02,
         0x48,
@@ -443,4 +441,5 @@ function traceMsg(txt) {
 
 // 25.04 17:18:32.167 metercetmlt1: 5 <= fc304aacb40811118b05
 // 25.04 17:18:32.205 metercetmlt1: => fc304aacb4005d0a7e0c
+//                                     fc2fedcb050055f5dcae
 // 25.04 17:18:32.206 IH: get [ { id: '5_U1', value: 238.18 } ]
