@@ -24,7 +24,7 @@ module.exports = async function(plugin) {
   try {
     meterlist = await meterlistformer(plugin);
   } catch (err) {
-    plugin.log('Для работы плагина требуется версия системы не ниже 5.17.23');
+    plugin.log('Для работы плагина требуется версия системы не ниже 5.17.25');
     plugin.exit(17);
   }
 

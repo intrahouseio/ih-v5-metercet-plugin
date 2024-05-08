@@ -1,6 +1,5 @@
 {
   "name": "metercet",
   "dependencies": {
-    "shortid": "^2.2.16"
   }
 }
