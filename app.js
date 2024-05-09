@@ -9,20 +9,19 @@
  *        - изменение парметров каналов (r:1/0, polltimefctr: - изменение интервала опроса)
  *   - по событию изменения
  *       - запрашивает и формирует каналы заново
- *       - вызывает функцию агента restartPolling() с новым списком счетчиков
  *
  */
 const util = require('util');
 
 const Agent = require('./lib/agent');
-const meterlistformer = require('./lib/meterlistformer');
+const meters = require('./lib/meters');
+// const meterlistformer = require('./lib/meterlistformer');
 
 module.exports = async function(plugin) {
   let agent;
-  let meterlist = [];
-
   try {
-    meterlist = await meterlistformer(plugin);
+    meters.init(plugin);
+    await getAndCreateMeterlist();
   } catch (err) {
     plugin.log('Для работы плагина требуется версия системы не ниже 5.17.25');
     plugin.exit(17);
@@ -30,15 +29,26 @@ module.exports = async function(plugin) {
 
   try {
     agent = new Agent(plugin, plugin.params);
-    agent.run(meterlist);
+    agent.run();
 
     plugin.channels.onChange(async () => {
-      meterlist = await meterlistformer(plugin);
-      agent.restartPolling(meterlist);
+      await getAndCreateMeterlist();
+      agent.restartPolling();
     });
   } catch (err) {
     plugin.log('ERROR: ' + util.inspect(err));
     plugin.exit(2);
+  }
+
+
+  async function getAndCreateMeterlist() {
+    const devhard = await plugin.devhard.get();
+    plugin.log('Received devhard data: ' + util.inspect(devhard), 2);
+    meters.createMeterlist(devhard);
+    if (meters.isEmpty()) {
+      plugin.log('ERROR: Список счетчиков пуст! Нет каналов для опроса...');
+      plugin.exit(3);
+    }
   }
 
   process.on('SIGTERM', () => {
