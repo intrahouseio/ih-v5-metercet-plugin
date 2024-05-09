@@ -1,5 +1,6 @@
 {
   "grid": [
+    { "id": "p0", "xs": 12, "class": "main", "table": "sysinfoTable", "hide": "data.p0.version" },
     { "id": "p1", "xs": 4, "class": "main", "table": "units" },
     { "id": "p2", "xs": 4, "class": "main", "table": "units" },
     { "id": "p3", "xs": 4, "class": "main", "table": "units" },
@@ -8,6 +9,14 @@
   ],
 
   "spacing": 10,
+  "p0": [
+    { "prop": "version", "title": "", "type": "text", "hide": "1==1" },
+    {
+      "prop": "header",
+      "title": "Для работы плагина требуется версия системы не ниже 5.17.25!",
+      "type": "header"
+    }
+  ],
 
   "p1": [
     { "prop": "id", "title": "ID", "type": "text" },
@@ -25,12 +34,8 @@
       "title": "$port",
       "type": "input",
       "default": "4001"
-    },
-    {
-      "prop": "header",
-      "title": "Для работы плагина требуется версия системы не ниже 5.17.23",
-      "type": "header"
     }
+   
   ],
 
   "p2": [
