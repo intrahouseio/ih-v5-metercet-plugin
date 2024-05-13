@@ -19,7 +19,7 @@
   "pnode": [
     { "prop": "foldertype", "title": "foldertype", "type": "text", "hide": "1==1" },
     { "prop": "parentname", "title": "$parentname", "type": "text" },
-    { "prop": "longadr", "title": "Серийный номер счетчика", "type": "text" }
+    { "prop": "addr", "title": "Серийный номер счетчика", "type": "text" }
   ],
 
   "p1": [

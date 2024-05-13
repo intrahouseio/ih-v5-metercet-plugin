@@ -12,7 +12,7 @@
   ],
 
   "p2": [
-    { "prop": "longadr", "title": "Серийный номер счетчика", "type": "input"},
+    { "prop": "addr", "title": "Серийный номер счетчика", "type": "input"},
     { "prop": "constant", "title": "Постоянная счетчика", "type": "number", "default": 1250 },
     { "prop": "ks", "title": "Коэф-т Кс для мгновенной мощности", "type": "number", "default":1, "min": 1, "max": 2 },
     { "prop": "handkti", "title": "Коэффициент тока", "type": "number", "default":1 },

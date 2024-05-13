@@ -8,7 +8,7 @@
   "hasTryStartState": 1,
   "linkChstatus": 0,
 
-  "share_node_folder_fields": ["longadr"],
+  "share_node_folder_fields": ["addr"],
 
   "validator": {
     "main": {
