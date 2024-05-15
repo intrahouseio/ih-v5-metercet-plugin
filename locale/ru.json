@@ -45,6 +45,7 @@
     "realtime_dev_str": "Устройство",
     "realtime_chan_val" : "Канал: значение",
     "realtime_chan_ts" : "Канал: время",
+    "realtime_chan_chstatus" : "Канал: ошибка",
     "realtime_dev_val" : "Устройство: значение",
     "realtime_dev_ts" : "Устройство: время",
     "realtime_dev_err" : "Устройство: ошибка",

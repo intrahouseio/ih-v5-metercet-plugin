@@ -83,8 +83,21 @@ function serverStart(port) {
 function getResponse(abuf) {
   const longAddress = abuf.subarray(0, 5);
   console.log('longAddress '+longAddress.toString('hex'))
+
+  // Адреса для тестирования:
+  // 7 - счетчик не отвечает ни на один запрос
+  const notAnsweredAdr =  Buffer.from([ 0xfc, 0, 0, 0, 0x7]);
+  if (longAddress.compare(notAnsweredAdr) == 0) {
+    console.log('notAnsweredAdr ');
+    return;
+  }
+
+  // 5 - счетчик не отвечает на запрос 05 - учтенной энергии (E)
+  const partialAnsweredAdr =  Buffer.from([ 0xfc, 0, 0, 0, 0x5]);
+ 
   const buf = abuf.subarray(5);
   console.log('buf '+buf.toString('hex'))
+
   let resbuf;
   // Сообщения - по коду запроса: 00, 01, 08 - первый байт
   switch (buf[0]) {
@@ -103,6 +116,10 @@ function getResponse(abuf) {
     // Чтение массивов учтенной энергии
     case 0x05:
       console.log('response05')
+      if (longAddress.compare(partialAnsweredAdr) == 0) {
+        console.log('partialAnsweredAdr');
+        return;
+      }
       resbuf = response05(buf);
       break;
 
@@ -439,7 +456,7 @@ function traceMsg(txt) {
   console.log(txt);
 }
 
-// 25.04 17:18:32.167 metercetmlt1: 5 <= fc304aacb40811118b05
+// 25.04 17:18:32.167 metercetmlt1: <= fc304aacb40811118b05
 // 25.04 17:18:32.205 metercetmlt1: => fc304aacb4005d0a7e0c
 //                                     fc2fedcb050055f5dcae
-// 25.04 17:18:32.206 IH: get [ { id: '5_U1', value: 238.18 } ]
+// 25.04 17:18:32.206 IH: get [ { id: 'U1', value: 238.18 } ]

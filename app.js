@@ -25,6 +25,8 @@ module.exports = async function(plugin) {
     agent.run();
 
     plugin.channels.onChange(async () => {
+      plugin.log('INFO: Каналы изменены - обновление данных опроса...');
+      agent.suspendPolling();
       await getAndCreateMeterlist();
       agent.restartPolling();
     });
@@ -35,9 +37,15 @@ module.exports = async function(plugin) {
 
   async function getAndCreateMeterlist() {
     const devhard = await plugin.devhard.get();
-    plugin.log('Received devhard data: ' + util.inspect(devhard), 2);
+    // plugin.log('Received devhard data: ' + util.inspect(devhard), 2);
     meters.createMeterlist(devhard);
-    if (meters.isEmpty()) {
+    if (!meters.isEmpty()) {
+      plugin.log('INFO: Счетчиков для опроса: ' + meters.list.length);
+      meters.list.forEach(meter => {
+        const nchan = Object.keys(meter.chans).length;
+        plugin.log(' ' + meter.parentname + ' Адрес: ' + meter.addr + ' Каналов для опроса: ' + nchan);
+      });
+    } else {
       plugin.log('ERROR: Список счетчиков пуст! Нет каналов для опроса...');
       plugin.exit(3);
     }

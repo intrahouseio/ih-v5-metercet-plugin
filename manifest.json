@@ -33,31 +33,7 @@
     "foldertype": "node",
     "chan": "Новый счетчик",
     "unitid": 1,
-    "channels": [
-      {
-        "chan": "EAP",
-        "note": "Энергия A+  всего ",
-        "devpropname": "EAP",
-        "order": 10
-      },
-      {
-        "chan": "EAM",
-        "note": "Энергия A-  всего ",
-        "devpropname": "EAM",
-        "order": 20
-      },
-      {
-        "chan": "ERP",
-        "note": "Энергия R+  всего ",
-        "devpropname": "ERP",
-        "order": 30
-      },
-      {
-        "chan": "ERM",
-        "note": "Энергия R-  всего ",
-        "devpropname": "ERM",
-        "order": 40
-      },
+    "channels": [  
       {
         "chan": "P0",
         "note": "Активная мощность  по всем фазам ",
@@ -171,6 +147,30 @@
         "note": "Частота",
         "devpropname": "F",
         "order": 230
+      },
+      {
+        "chan": "EAP",
+        "note": "Энергия A+  всего ",
+        "devpropname": "EAP",
+        "order": 310
+      },
+      {
+        "chan": "EAM",
+        "note": "Энергия A-  всего ",
+        "devpropname": "EAM",
+        "order": 320
+      },
+      {
+        "chan": "ERP",
+        "note": "Энергия R+  всего ",
+        "devpropname": "ERP",
+        "order": 330
+      },
+      {
+        "chan": "ERM",
+        "note": "Энергия R-  всего ",
+        "devpropname": "ERM",
+        "order": 340
       }
     ]
   }
